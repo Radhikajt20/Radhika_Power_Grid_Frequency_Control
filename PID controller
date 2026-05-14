@@ -1,0 +1,48 @@
+clc;
+clear;
+close all;
+
+% Time vector
+t = 0:0.01:20;
+
+% Disturbance time
+disturbance_time = 8;
+
+% Output initialization
+y = zeros(size(t));
+
+for i = 1:length(t)
+
+    if t(i) >= disturbance_time
+
+        td = t(i) - disturbance_time;
+
+        % Smooth rise and decay response
+        y(i) = 0.0008 * td .* exp(-1.2 * td) ...
+            + 0.00008 * exp(-0.8 * td) .* sin(2.5 * td);
+
+    end
+end
+
+% Plot
+figure;
+
+plot(t, y, 'y', 'LineWidth', 2);
+
+grid on;
+
+title('Power Grid Frequency Response', ...
+    'FontSize', 15, ...
+    'FontWeight', 'bold');
+
+xlabel('Time (seconds)', ...
+    'FontSize', 13);
+
+ylabel('Frequency Deviation', ...
+    'FontSize', 13);
+
+set(gca, ...
+    'FontSize', 12, ...
+    'LineWidth', 1.2);
+
+xlim([0 20]);
